@@ -62,8 +62,8 @@ Acesso: exclusivo WAREHOUSE_MANAGER.
 
 POST /users
 Acesso: exclusivo WAREHOUSE_MANAGER.
-Permite definir a role explicitamente. Reservado para criação de outro Almoxarife ou
-cadastro assistido de Colaborador.
+Cria exclusivamente um novo WAREHOUSE_MANAGER. A role não é informada no corpo da
+requisição — é sempre WAREHOUSE_MANAGER. Corpo: name, re, area, password.
 
 ## Atualizar dados do usuário autenticado
 

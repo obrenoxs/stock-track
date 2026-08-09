@@ -16,10 +16,11 @@ Existem dois fluxos de criação de conta:
 
 - **Autocadastro (Colaborador):** qualquer pessoa pode se cadastrar via `POST /auth/register`,
   informando RE e senha. Toda conta criada por este fluxo nasce obrigatoriamente com role COLLABORATOR.
-- **Cadastro administrativo (Almoxarife):** o WAREHOUSE_MANAGER pode cadastrar usuários via
-  `POST /users`, podendo definir explicitamente a role (COLLABORATOR ou WAREHOUSE_MANAGER).
-  Reservado para casos administrativos, como criação de outro Almoxarife ou cadastro assistido
-  de um Colaborador.
+- **Cadastro administrativo (Almoxarife):** o `WAREHOUSE_MANAGER` pode cadastrar outro
+  Almoxarife via `POST /users`. A role não é informada na requisição — é sempre
+  `WAREHOUSE_MANAGER`, atribuída automaticamente pelo Service. Não existe mais cadastro
+  assistido de Colaborador por este endpoint; o Colaborador sempre se autocadastra via
+  `POST /auth/register`.
 - O primeiro WAREHOUSE_MANAGER do sistema é inserido via migration Flyway (seed inicial),
   já que não existe fluxo de "promoção" de usuário via API na V1.
 

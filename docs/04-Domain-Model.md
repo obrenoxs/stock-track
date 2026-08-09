@@ -84,7 +84,7 @@ Valores:
 ### Regra de criação de conta
 
 Existem dois fluxos: autocadastro público (`POST /auth/register`, sempre gera COLLABORATOR)
-e cadastro administrativo pelo Almoxarife (`POST /users`, com role explícita). O primeiro
+e cadastro administrativo pelo Almoxarife (`POST /users`). O primeiro
 WAREHOUSE_MANAGER é inserido via seed Flyway.
 
 ---

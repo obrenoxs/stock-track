@@ -1,5 +1,6 @@
 package com.stocktrack.shared.security;
 
+import com.stocktrack.user.security.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

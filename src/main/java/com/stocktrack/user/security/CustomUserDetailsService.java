@@ -1,4 +1,4 @@
-package com.stocktrack.shared.security;
+package com.stocktrack.user.security;
 
 import com.stocktrack.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

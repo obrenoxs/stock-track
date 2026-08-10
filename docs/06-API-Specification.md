@@ -427,7 +427,8 @@ Toda API utilizará `/api/v1`. Novas versões seguirão `/api/v2`.
 
 # Paginação
 
-Endpoints de listagem com potencial de grande volume (`/tools`, `/loans`, `/audit-logs`) utilizarão paginação:
+Endpoints de listagem com potencial de grande volume (`/tools`, `/loans`, `/audit-logs`, `/users`)
+utilizarão paginação:
 
 ```
 ?page=0&size=10&sort=createdAt,desc

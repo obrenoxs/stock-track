@@ -206,6 +206,15 @@ Endpoints de empréstimo e devolução estarão disponíveis para ambos os papé
 
 ---
 
+## Token JWT
+
+O token de acesso expira em 1 hora. Não existe endpoint de refresh token na V1 — expirado o
+token, o usuário realiza login novamente. Chave de assinatura e tempo de expiração são lidos
+via variável de ambiente, nunca hardcoded (ver 08-Development-Standards.md, seção Segurança).
+
+---
+
+
 # Convenções
 
 ## Identificadores

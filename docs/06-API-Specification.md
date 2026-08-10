@@ -44,6 +44,8 @@ POST /auth/register
 Descrição: autocadastro público. Cria usuário com role COLLABORATOR.
 Corpo: name, re, area, password.
 
+Resposta: 201 Created, com o usuário criado e o token JWT (login automático após o cadastro).
+
 ---
 
 # Usuários

@@ -1,6 +1,5 @@
 package com.stocktrack.shared.security;
 
-import com.stocktrack.user.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,13 +19,13 @@ public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    public String generateToken(User user) {
+    public String generateToken(String re, String role) {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + jwtProperties.getExpiration());
 
         return Jwts.builder()
-                .subject(user.getRe())
-                .claim(ROLE_CLAIM, user.getRole().name())
+                .subject(re)
+                .claim(ROLE_CLAIM, role)
                 .issuedAt(now)
                 .expiration(expiresAt)
                 .signWith(getSigningKey())

@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private CategoryRepository categoryRepository;
-    private CategoryMapper categoryMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Transactional
     public CategoryResponseDTO create(CategoryRequestDTO dto) {

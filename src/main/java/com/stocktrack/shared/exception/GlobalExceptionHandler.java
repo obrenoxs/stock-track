@@ -1,8 +1,11 @@
 package com.stocktrack.shared.exception;
 
+import com.stocktrack.user.exception.InvalidCurrentPasswordException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,6 +46,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     ResponseEntity<ErrorResponseDTO> handleGeneric(Exception ex, HttpServletRequest request) {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor", request, null);
+    }
+
+    @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
+    public ResponseEntity<ErrorResponseDTO> handleAuthenticationFailure(Exception ex, HttpServletRequest request) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, "RE ou senha inválidos", request, null);
+    }
+
+    @ExceptionHandler(InvalidCurrentPasswordException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidCurrentPassword(InvalidCurrentPasswordException ex, HttpServletRequest request) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request, null);
     }
 
     private ResponseEntity<ErrorResponseDTO> buildResponse(

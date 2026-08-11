@@ -24,3 +24,4 @@ server:
 logging:
   level:
     com.stocktrack: DEBUG
+    org.springframework.security: DEBUG

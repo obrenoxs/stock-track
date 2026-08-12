@@ -2,7 +2,7 @@ package com.stocktrack.location.dto.response;
 
 import java.time.LocalDateTime;
 
-public record LocationRequestDTO(
+public record LocationResponseDTO(
         Long id,
         String corridor,
         String shelf,

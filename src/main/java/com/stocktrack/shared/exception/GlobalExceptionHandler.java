@@ -67,6 +67,11 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.FORBIDDEN, "Você não tem permissão para realizar esta ação", request, null);
     }
 
+    @ExceptionHandler(ResourceInUseException.class)
+    public ResponseEntity<ErrorResponseDTO> handleResourceInUse(ResourceInUseException ex, HttpServletRequest request) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), request, null);
+    }
+
     private ResponseEntity<ErrorResponseDTO> buildResponse(
             HttpStatus status, String message, HttpServletRequest request,
             List<ErrorResponseDTO.FieldErrorDTO> errors) {

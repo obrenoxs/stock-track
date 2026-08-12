@@ -6,6 +6,7 @@ import com.stocktrack.category.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +42,10 @@ public class CategoryController {
         return categoryService.update(id, dto);
     }
 
-    // DELETE /categories/{id} pendente — depende da validação de ToolType vinculado,
-    // que só existe quando o módulo ToolType for implementado (ver 03-Business-Rules.md,
-    // seção Categoria > Exclusão).
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('WAREHOUSE_MANAGER')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        categoryService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

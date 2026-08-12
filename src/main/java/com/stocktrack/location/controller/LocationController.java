@@ -33,7 +33,7 @@ public class LocationController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('WAREHOUSE_MANAGER')")
     public LocationResponseDTO create(@Valid @RequestBody LocationRequestDTO dto) {
-        locationService.create(dto);
+        return locationService.create(dto);
     }
 
     @PutMapping

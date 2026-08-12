@@ -191,6 +191,19 @@ PUT
 
 Acesso: exclusivo WAREHOUSE_MANAGER.
 
+## Excluir tipo de ferramenta
+
+DELETE
+
+```
+/tool-types/{id}
+```
+
+Acesso: exclusivo WAREHOUSE_MANAGER.
+
+Permitido apenas se não existir nenhuma unidade (Tool) vinculada a este tipo (ver
+`03-Business-Rules.md`, seção Tipo de Ferramenta > Exclusão).
+
 ## Alterar status
 
 PATCH

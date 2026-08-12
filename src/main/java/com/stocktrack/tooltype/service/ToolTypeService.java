@@ -8,7 +8,9 @@ import com.stocktrack.tooltype.dto.response.ToolTypeResponseDTO;
 import com.stocktrack.tooltype.entity.ToolType;
 import com.stocktrack.tooltype.mapper.ToolTypeMapper;
 import com.stocktrack.tooltype.repository.ToolTypeRepository;
+import com.stocktrack.tooltype.repository.ToolTypeSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +47,19 @@ public class ToolTypeService {
 
     @Transactional(readOnly = true)
     public List<ToolTypeResponseDTO> findAll(Long categoryId, Boolean requiresCalibration) {
+        Specification<ToolType> spec = Specification
+                .where(ToolTypeSpecifications.hasCategory(categoryId))
+                .and(ToolTypeSpecifications.requiresCalibration(requiresCalibration));
 
+        return toolTypeRepository.findAll(spec).stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ToolTypeResponseDTO findById(Long id) {
+        ToolType toolType = getToolTypeOrThrow(id);
+        return toResponseDTO(toolType);
     }
 
     private Set<Category> resolveCategories(Set<Long> categoryIds) {

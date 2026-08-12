@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +66,11 @@ public class CategoryService {
         }
 
         categoryRepository.delete(category);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Category> findEntitiesByIds(Set<Long> ids) {
+        return categoryRepository.findAllById(ids);
     }
 
     private void validateNameNotDuplicated(String name) {

@@ -20,7 +20,7 @@ public interface ToolTypeMapper {
     ToolType toEntity(ToolTypeRequestDTO dto);
 
     @Mapping(target = "availableQuantity", source = "availableQuantity")
-    ToolTypeResponseDTO toResponse(ToolType toolType, int availableQuantity);
+    ToolTypeResponseDTO toResponseDTO(ToolType toolType, int availableQuantity);
 
     CategorySummaryDTO toCategorySummaryDto(Category category);
 

@@ -11,6 +11,7 @@ public record ToolTypeResponseDTO(
         String description,
         int minimumStock,
         boolean requiresCalibration,
+        Integer calibrationIntervalMonths,
         int availableQuantity,
         Set<CategorySummaryDTO> categories,
         LocalDateTime createdAt,

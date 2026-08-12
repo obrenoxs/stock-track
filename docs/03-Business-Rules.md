@@ -89,6 +89,13 @@ Todo Tipo de Ferramenta deverá possuir obrigatoriamente:
 - pelo menos uma categoria associada;
 - indicação se exige controle de calibração (`requiresCalibration`).
 
+## Intervalo de Calibração
+
+Aplicável apenas quando `requiresCalibration = true`. O Almoxarife define, no momento do
+cadastro, o intervalo em meses entre calibrações consecutivas (ex: 1, 3, 7 meses). Esse valor
+é usado para calcular `nextCalibrationDate` sempre que uma calibração é registrada em uma
+unidade (Tool) desse tipo.
+
 ## Fluxo de Cadastro de Unidades
 
 O número de série é sempre obrigatório no momento do cadastro de uma unidade — não existe unidade de ferramenta sem número de série definido.

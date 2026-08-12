@@ -37,6 +37,9 @@ public class ToolType extends BaseEntity {
     @Column(name = "requires_calibration", nullable = false)
     private boolean requiresCalibration;
 
+    @Column(name = "calibration_interval_months")
+    private Integer calibrationIntervalMonths;
+
     @ManyToMany
     @JoinTable(
             name = "tool_types_categories",

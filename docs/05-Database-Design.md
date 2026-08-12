@@ -87,6 +87,7 @@ id BIGINT AUTO_INCREMENT
 | description | TEXT | NULL |
 | minimum_stock | INT | NOT NULL |
 | requires_calibration | BOOLEAN | NOT NULL DEFAULT FALSE |
+| calibration_interval_months | INT | NULL |
 | created_at | DATETIME | NOT NULL |
 | updated_at | DATETIME | NOT NULL |
 

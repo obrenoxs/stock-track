@@ -2,6 +2,7 @@ package com.stocktrack.tooltype.service;
 
 import com.stocktrack.category.entity.Category;
 import com.stocktrack.category.service.CategoryService;
+import com.stocktrack.shared.exception.BusinessRuleException;
 import com.stocktrack.shared.exception.ResourceNotFoundException;
 import com.stocktrack.tooltype.dto.request.ToolTypeRequestDTO;
 import com.stocktrack.tooltype.dto.response.ToolTypeResponseDTO;
@@ -27,6 +28,8 @@ public class ToolTypeService {
 
     @Transactional
     public ToolTypeResponseDTO create(ToolTypeRequestDTO dto) {
+        validateCalibrationInterval(dto);
+
         ToolType toolType = toolTypeMapper.toEntity(dto);
         toolType.setCategories(resolveCategories(dto.categoryIds()));
 
@@ -36,6 +39,8 @@ public class ToolTypeService {
 
     @Transactional
     public ToolTypeResponseDTO update(Long id, ToolTypeRequestDTO dto) {
+        validateCalibrationInterval(dto);
+
         ToolType toolType = getToolTypeOrThrow(id);
 
         toolTypeMapper.updateEntityFromDto(dto, toolType);
@@ -81,5 +86,12 @@ public class ToolTypeService {
     private ToolType getToolTypeOrThrow(Long id) {
         return toolTypeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tipo de ferramenta não encontrada com id: " + id));
+    }
+
+    private void validateCalibrationInterval(ToolTypeRequestDTO dto) {
+        if (Boolean.TRUE.equals(dto.requiresCalibration()) && dto.calibrationIntervalMonths() == null) {
+            throw new BusinessRuleException(
+                    "Intervalo de calibração é obrigatório quando requiresCalibration é true");
+        }
     }
 }

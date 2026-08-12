@@ -27,6 +27,9 @@ public record ToolTypeRequestDTO(
         @NotNull(message = "Indicação de calibração é obrigatória")
         Boolean requiresCalibration,
 
+        @Positive(message = "Intervalo de calibração deve ser maior que zero")
+        Integer calibrationIntervalMonths,
+
         @NotEmpty(message = "Pelo menos uma categoria deve ser associada")
         Set<Long> categoryIds
 ) {}

@@ -107,6 +107,10 @@ No momento da criação de um Tipo de Ferramenta, o Almoxarife pode optar por:
 
 Em ambos os casos, cada unidade só é efetivamente criada no sistema com seu número de série já definido — não existe conceito de unidade "incompleta" ou "aguardando preenchimento" no Backend. A possibilidade de cadastro em lote é uma conveniência de fluxo (por exemplo, um formulário que permite informar vários números de série de uma vez), não uma exceção à regra de obrigatoriedade.
 
+Nota de escopo: a V1 implementa apenas o cadastro de unidade única. O cadastro em lote
+(múltiplos números de série na mesma operação) é adiado para versão futura, mesmo sendo
+tecnicamente descrito acima como possibilidade do domínio.
+
 ## Estoque Mínimo
 
 O estoque mínimo é definido individualmente por Tipo de Ferramenta, no momento do seu cadastro, e nunca por Categoria — categorias são apenas classificação, sem relação com controle de estoque.

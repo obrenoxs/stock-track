@@ -310,7 +310,7 @@ POST
 
 Acesso: exclusivo WAREHOUSE_MANAGER.
 
-Aceita tanto uma única unidade quanto uma lista de números de série para criação em lote (ver `03-Business-Rules.md`, seção Fluxo de Cadastro de Unidades).
+Cria uma única unidade por requisição. Cadastro em lote adiado para versão futura.
 
 ## Atualizar dados da ferramenta
 

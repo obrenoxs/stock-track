@@ -20,12 +20,13 @@ import com.stocktrack.tooltype.entity.ToolType;
 import com.stocktrack.tooltype.service.ToolTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -56,8 +57,8 @@ public class ToolService {
     }
 
     @Transactional(readOnly = true)
-    public List<ToolResponseDTO> findAll(String name, Long categoryId, ToolStatus status,
-                                         Long locationId, Long toolTypeId) {
+    public Page<ToolResponseDTO> findAll(String name, Long categoryId, ToolStatus status,
+                                         Long locationId, Long toolTypeId, Pageable pageable) {
         Specification<Tool> spec = Specification
                 .where(ToolSpecifications.hasToolTypeNameContaining(name))
                 .and(ToolSpecifications.hasCategory(categoryId))
@@ -65,9 +66,8 @@ public class ToolService {
                 .and(ToolSpecifications.hasLocation(locationId))
                 .and(ToolSpecifications.hasToolType(toolTypeId));
 
-        return toolRepository.findAll(spec).stream()
-                .map(this::toResponseDTO)
-                .toList();
+        return toolRepository.findAll(spec, pageable)
+                .map(this::toResponseDTO);
     }
 
     @Transactional(readOnly = true)

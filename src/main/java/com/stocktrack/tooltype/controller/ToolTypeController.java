@@ -6,6 +6,7 @@ import com.stocktrack.tooltype.service.ToolTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,10 @@ public class ToolTypeController {
         return toolTypeService.update(id, dto);
     }
 
-    // DELETE /tool-types/{id} pendente — depende da validação de Tool vinculada,
-    // que só existe quando o módulo Tool for implementado (ver 03-Business-Rules.md,
-    // seção Tipo de Ferramenta > Exclusão).
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('WAREHOUSE_MANAGER')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        toolTypeService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -3,6 +3,7 @@ package com.stocktrack.tooltype.service;
 import com.stocktrack.category.entity.Category;
 import com.stocktrack.category.service.CategoryService;
 import com.stocktrack.shared.exception.BusinessRuleException;
+import com.stocktrack.shared.exception.ResourceInUseException;
 import com.stocktrack.shared.exception.ResourceNotFoundException;
 import com.stocktrack.tooltype.dto.request.ToolTypeRequestDTO;
 import com.stocktrack.tooltype.dto.response.ToolTypeResponseDTO;
@@ -25,6 +26,7 @@ public class ToolTypeService {
     private final ToolTypeRepository toolTypeRepository;
     private final ToolTypeMapper toolTypeMapper;
     private final CategoryService categoryService;
+    private final ToolInventoryPort toolInventoryPort;
 
     @Transactional
     public ToolTypeResponseDTO create(ToolTypeRequestDTO dto) {
@@ -67,6 +69,20 @@ public class ToolTypeService {
         return toResponseDTO(toolType);
     }
 
+    @Transactional(readOnly = true)
+    public ToolType findEntityById(Long id) {
+        return getToolTypeOrThrow(id);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        ToolType toolType = getToolTypeOrThrow(id);
+
+        if (toolInventoryPort.existsForToolType(id)) {
+            throw new ResourceInUseException("Tipo de ferramenta não pode ser excluído: existe Ferramenta vinculada");
+        }
+    }
+
     private Set<Category> resolveCategories(Set<Long> categoryIds) {
         List<Category> found = categoryService.findEntitiesByIds(categoryIds);
 
@@ -78,9 +94,8 @@ public class ToolTypeService {
     }
 
     private ToolTypeResponseDTO toResponseDTO(ToolType toolType) {
-        // TODO: substituir 0 pela contagem real de Tool com status AVAILABLE,
-        // assim que o módulo Tool existir (ver 04-Domain-Model.md, nota sobre availableQuantity)
-        return toolTypeMapper.toResponseDTO(toolType, 0);
+        long availableQuantity = toolInventoryPort.countAvailableForToolType(toolType.getId());
+        return toolTypeMapper.toResponseDTO(toolType, (int) availableQuantity);
     }
 
     private ToolType getToolTypeOrThrow(Long id) {

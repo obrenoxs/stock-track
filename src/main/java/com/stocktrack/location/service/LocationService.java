@@ -55,6 +55,11 @@ public class LocationService {
         return locationMapper.toResponseDTO(saved);
     }
 
+    @Transactional(readOnly = true)
+    public Location findEntityById(Long id) {
+        return getLocationOrThrow(id);
+    }
+
     @Transactional
     public void delete(Long id) {
         Location location = getLocationOrThrow(id);

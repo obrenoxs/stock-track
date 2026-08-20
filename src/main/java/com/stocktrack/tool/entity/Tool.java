@@ -23,7 +23,7 @@ public class Tool extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    private ToolStatus toolStatus;
+    private ToolStatus status;
 
     @Column(name = "last_calibration_date")
     private LocalDate lastCalibrationDate;

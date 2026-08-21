@@ -61,6 +61,12 @@ public class UserService {
         return userMapper.toResponseDTO(saved);
     }
 
+    @Transactional(readOnly = true)
+    public User findEntityById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+    }
+
     private UserResponseDTO createUser(UserRequestDTO dto, Role role) {
         validateReNotDuplicated(dto.re());
 

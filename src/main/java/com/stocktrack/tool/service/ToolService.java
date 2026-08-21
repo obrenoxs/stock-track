@@ -138,6 +138,31 @@ public class ToolService {
         return toResponseDTO(saved);
     }
 
+    @Transactional(readOnly = true)
+    public Tool findEntityById(Long id) {
+        return getToolOrThrow(id);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isCalibrationOverdue(Long toolId){
+        Tool tool = getToolOrThrow(toolId);
+        return isCalibrationOverdue(tool);
+    }
+
+    @Transactional
+    public void markAsInUse(Long toolId) {
+        Tool tool = getToolOrThrow(toolId);
+        tool.setStatus(ToolStatus.IN_USE);
+        toolRepository.save(tool);
+    }
+
+    @Transactional
+    public void markAsAvailable(Long toolId) {
+        Tool tool = getToolOrThrow(toolId);
+        tool.setStatus(ToolStatus.AVAILABLE);
+        toolRepository.save(tool);
+    }
+
     private void validateStatusTransition(ToolStatus current, ToolStatus target) {
         if (current == ToolStatus.DISCARDED) {
             throw new BusinessRuleException("Ferramenta descartada não pode mudar de status");

@@ -386,6 +386,16 @@ Acesso: qualquer usuário autenticado.
 
 Corpo: `observation` (opcional).
 
+## Buscar empréstimo
+
+GET
+
+```
+/loans/{id}
+```
+
+Acesso: WAREHOUSE_MANAGER vê qualquer empréstimo; COLLABORATOR vê apenas os próprios.
+
 ## Listar empréstimos
 
 GET

@@ -4,10 +4,12 @@ import com.stocktrack.loan.dto.request.LoanCreateRequestDTO;
 import com.stocktrack.loan.dto.request.LoanReturnRequestDTO;
 import com.stocktrack.loan.dto.response.LoanResponseDTO;
 import com.stocktrack.loan.entity.Loan;
+import com.stocktrack.loan.enums.LoanStatusFilter;
 import com.stocktrack.loan.event.ToolLoanedEvent;
 import com.stocktrack.loan.event.ToolReturnedEvent;
 import com.stocktrack.loan.mapper.LoanMapper;
 import com.stocktrack.loan.repository.LoanRepository;
+import com.stocktrack.loan.repository.LoanSpecifications;
 import com.stocktrack.shared.exception.BusinessRuleException;
 import com.stocktrack.shared.exception.ResourceNotFoundException;
 import com.stocktrack.tool.entity.Tool;
@@ -17,6 +19,9 @@ import com.stocktrack.user.entity.User;
 import com.stocktrack.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,6 +80,33 @@ public class LoanService {
         eventPublisher.publishEvent(new ToolReturnedEvent(loan.getId(), loan.getTool().getId(), returnedByUserId));
 
         return toResponseDTO(saved);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LoanResponseDTO> findAll(Long toolId, Long userId, LoanStatusFilter status,
+                                         Pageable pageable, Long currentUserId, boolean isManager) {
+
+        Long effectiveUserId = isManager ? userId : currentUserId;
+
+        Specification<Loan> spec = Specification
+                .where(LoanSpecifications.hasTool(toolId))
+                .and(LoanSpecifications.hasBorrowedByUser(effectiveUserId))
+                .and(LoanSpecifications.hasStatus(status));
+
+        return loanRepository.findAll(spec, pageable)
+                .map(this::toResponseDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public LoanResponseDTO findById(Long id, Long currentUserId, boolean isManager) {
+        Loan loan = loanRepository.findByIdWithDetails(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Empréstimo não encontrado com id: " + id));
+
+        if (!isManager && !loan.getBorrowedByUser().getId().equals(currentUserId)) {
+            throw new ResourceNotFoundException("Empréstimo não encontrado com id: " + id);
+        }
+
+        return toResponseDTO(loan);
     }
 
     @Transactional(readOnly = true)

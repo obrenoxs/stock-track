@@ -87,7 +87,6 @@ A primeira versão contemplará:
 - busca e filtros por nome, categoria, status e localização;
 - log de auditoria imutável de todas as ações relevantes;
 - documentação completa da API (OpenAPI/Swagger);
-- arquitetura RESTful, autenticação JWT, Docker, GitHub Actions.
 
 ---
 
@@ -145,12 +144,6 @@ Ser uma referência em controle de estoque de ferramentas para ambientes industr
 O StockTrack será desenvolvido com a stack já validada no projeto anterior do autor (Monexus Finance), reaproveitando conhecimento técnico consolidado para maximizar velocidade de execução dentro do cronograma disponível:
 
 - **Backend:** Java, Spring Boot, Spring Security (com autorização baseada em papéis — Colaborador e Almoxarife), Spring Data JPA, Hibernate, MySQL, Flyway, MapStruct.
-- **Testes:** JUnit 5, Mockito, Testcontainers (testes unitários e de integração).
-- **DevOps:** Docker e Docker Compose, GitHub Actions (CI/CD), OpenAPI/Swagger.
-- **Frontend (avaliação futura):** React, Tailwind CSS — a ser iniciado somente após o Backend estar completo, e apenas se o cronograma permitir.
-
-**Nota importante sobre o ambiente Docker:** todo o desenvolvimento ocorre em uma máquina Windows, com exceção do Docker, que roda exclusivamente em uma máquina virtual Ubuntu via VirtualBox, devido a uma limitação de virtualização da máquina host. O restante do projeto (IDE, código-fonte, execução local do Backend fora de containers) roda diretamente no Windows. Essa divisão de ambiente deve ser considerada em qualquer etapa que envolva configuração de Docker, Docker Compose ou Testcontainers, para evitar conflitos de configuração entre os dois sistemas.
-
 ---
 
 ## Sobre a Origem do Projeto

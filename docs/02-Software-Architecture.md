@@ -57,16 +57,6 @@ O projeto seguirá os princípios:
 
 - MySQL
 
-## Frontend
-
-- Avaliação futura (React), condicionada ao cronograma do projeto. Não faz parte do escopo inicial de implementação.
-
-## DevOps
-
-- Docker
-- Docker Compose
-- GitHub Actions
-
 ## Documentação
 
 - OpenAPI

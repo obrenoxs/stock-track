@@ -191,14 +191,6 @@ Enquanto o desenvolvimento for individual, o trabalho ocorrerá diretamente na `
 
 ---
 
-# Testes
-
-Sempre que possível desenvolver: Unit Tests e Integration Tests.
-
-Cobertura objetivo futuro: 80%+.
-
----
-
 # Performance
 
 Evitar: consultas N+1, carregamentos desnecessários, duplicação de código.
@@ -226,7 +218,6 @@ Antes de finalizar qualquer funcionalidade, verificar:
 ✓ DTO
 ✓ Mapper
 ✓ Exception
-✓ Testes
 ✓ Documentação
 ✓ REST
 
